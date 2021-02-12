@@ -1,0 +1,16 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "This is real time chat application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "prod": "node src/app.js"
+  },
+  "author": "Vishal Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
