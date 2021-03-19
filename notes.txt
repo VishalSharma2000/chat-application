@@ -1,0 +1,32 @@
+Count Example
+-- server.js --
+
+/* the callback function inside the on-connection event will be running the number of times a new connection is
+established between new client and the server. If 7 clients are connected to the server then the callback will be running 
+7 times */
+io.on('connection', (socket) => {
+  // socket variable contains information about the connection
+  console.log('Client connected to server');
+
+  /* when we want to talk with client we will work with events. So, we will emit events from server and the clients will 
+  receive the event. */
+  socket.emit('countUpdated', count); // emiting a countUpdated event. Note: countUpdated is a custom event here.
+  /* whatever value will be after the first parameter will be passed to the client as data */
+
+  socket.on('increment', () => {
+    count++;
+
+    // socket.emit('countUpdated', count); => will emit or send the event to a particular connection only
+    io.emit('countUpdated', count);
+  });
+});
+
+-- chat.js --
+const incBtn = document.querySelector("#incBtn");
+socket.on('countUpdated', (count) => {
+  console.log('Count has been updated ', count);
+});
+
+incBtn.addEventListener('click', () => {
+  socket.emit('increment');
+}); 
