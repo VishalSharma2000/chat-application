@@ -16,15 +16,19 @@ const {
 
 app.use(express.static('public'));
 
-let message = "Welcome!";
+let message = {client: "Server", msg: "Welcome!"};
 const clients = ['vishal', 'gaurav'];
 
 io.on('connection', (socket) => {
   socket.emit('message', message);
 
-  socket.on('message', (message) => {
+  socket.on('sendmessage', (message) => {
     io.emit('message', message)
-  })
+  });
+
+  socket.on('sendLocation', message => {
+    socket.broadcast.emit('message', message);
+  });
 });
 
 server.listen(PORT, () => (

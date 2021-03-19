@@ -22,5 +22,16 @@ const sendMessage = (event) => {
 
   const msg = document.querySelector("#userMsg");
   console.log('Message: ',msg.value, "Client Name: ", clientName);
-  socket.emit("message", {client: clientName, msg: msg.value});
+  socket.emit("sendmessage", {client: clientName, msg: msg.value});
 }
+
+document.querySelector("#share-location")
+  .addEventListener('click', () => {
+    if(!navigator.geolocation) 
+      return alert("Sharing Location is not supported in your browser");
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      socket.emit("sendLocation", { latitude, longitude });
+    });
+  });
