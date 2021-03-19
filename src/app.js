@@ -16,12 +16,15 @@ const {
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send('working');
-});
+let message = "Welcome!";
+const clients = ['vishal', 'gaurav'];
 
-io.on('connection', () => {
-  console.log('Client connected to server');
+io.on('connection', (socket) => {
+  socket.emit('message', message);
+
+  socket.on('message', (message) => {
+    io.emit('message', message)
+  })
 });
 
 server.listen(PORT, () => (

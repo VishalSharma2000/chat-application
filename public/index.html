@@ -7,7 +7,21 @@
   <title>Home Page</title>
 </head>
 <body>
-  This is home page
+  
+  <div>
+    <input type="text" id="clientName" />
+    <button onclick="registerMe()">Register</button>
+  </div>
+
+  <div id="chat-form">
+    <div id="chats">
+
+    </div>
+    <form onsubmit="sendMessage(event)">
+      <input id="userMsg" type="text" placeholder="Enter" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
 
   <!-- The below script is the client side package or library for the socket.io
   library. It will help the client to make connection with the server. -->
