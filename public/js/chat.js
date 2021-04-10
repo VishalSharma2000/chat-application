@@ -22,9 +22,13 @@ const sendMessage = (event) => {
 
   const msg = document.querySelector("#userMsg");
   console.log('Message: ',msg.value, "Client Name: ", clientName);
-  socket.emit("sendmessage", {client: clientName, msg: msg.value}, (message) => {
+  socket.emit("sendmessage", {client: clientName, msg: msg.value}, (error) => {
     // this callback is for acknowledgement from the receiver
-    console.log(message);
+    if(error) {
+      return console.log(error);
+    }
+
+    console.log('Message Received');
   });
 }
 
