@@ -21,13 +21,18 @@ const clients = ['vishal', 'gaurav'];
 
 io.on('connection', (socket) => {
   socket.emit('message', message);
+  socket.broadcast.emit('message', 'A new user has joined');
 
-  socket.on('sendmessage', (message) => {
+  socket.on('sendmessage', (message, callback) => {
     io.emit('message', message)
+
+    callback('Message Received');
   });
 
-  socket.on('sendLocation', coords => {
+  socket.on('sendLocation', (coords, callback) => {
     socket.broadcast.emit('message', `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`);
+
+    callback();
   });
 });
 

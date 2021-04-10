@@ -22,7 +22,10 @@ const sendMessage = (event) => {
 
   const msg = document.querySelector("#userMsg");
   console.log('Message: ',msg.value, "Client Name: ", clientName);
-  socket.emit("sendmessage", {client: clientName, msg: msg.value});
+  socket.emit("sendmessage", {client: clientName, msg: msg.value}, (message) => {
+    // this callback is for acknowledgement from the receiver
+    console.log(message);
+  });
 }
 
 document.querySelector("#share-location")
@@ -32,6 +35,8 @@ document.querySelector("#share-location")
 
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
-      socket.emit("sendLocation", { latitude, longitude });
+      socket.emit("sendLocation", { latitude, longitude }, () => {
+        console.log('Location Shared!');
+      });
     });
   });
