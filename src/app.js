@@ -17,8 +17,7 @@ const {
 
 app.use(express.static('public'));
 
-let message = {client: "Server", msg: "Welcome!"};
-const clients = ['vishal', 'gaurav'];
+let message = "Welcome to chat room!!";
 
 io.on('connection', (socket) => {
   socket.emit('message', message);
@@ -26,7 +25,7 @@ io.on('connection', (socket) => {
 
   socket.on('sendmessage', (message, callback) => {
     const filter = new Filter();
-    if(filter.isProfane(message.msg)) {
+    if (filter.isProfane(message)) {
       return callback('Profanity is not allowed');
     }
 
@@ -38,6 +37,10 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('message', `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`);
 
     callback();
+  });
+
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('message', 'A user has left the chat room');
   });
 });
 
