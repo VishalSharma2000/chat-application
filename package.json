@@ -4,7 +4,7 @@
   "description": "This is real time chat application",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/app.js",
+    "dev": "nodemon src/app.js --ext css, html",
     "prod": "node src/app.js"
   },
   "author": "Vishal Sharma",

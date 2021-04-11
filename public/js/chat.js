@@ -23,7 +23,10 @@ socket.on('message', message => {
 socket.on('shareLocation', location => {
   console.log('Location: ', location);
 
-  renderMessage(locationTemplate, { location }, msgs);
+  renderMessage(locationTemplate, {
+    url: location.url,
+    createdAt: moment(location.createdAt).format('hh:mm a'),
+  }, msgs);
 })
 
 const renderMessage = (template, value, target) => {

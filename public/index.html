@@ -4,32 +4,46 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
+    <link rel="stylesheet" href="/css/styles.min.css" />
+    <link rel="icon" href="/img/favicon.png" />
+    <title>Chat App</title>
   </head>
   <body>
-    <h3>Chat Application</h3>
+    <div class="chat">
+      <div class="chat__sidebar"></div>
 
-    <div id="msgs"></div>
+      <div class="chat__main">
+        <div id="msgs" class="chat__messages"></div>
 
-    <div id="chat-form">
-      <form onsubmit="sendMessage(event)">
-        <input id="userMsg" type="text" placeholder="Enter" />
-        <button type="submit" id="sendMsg">Send</button>
-      </form>
+        <div id="chat-form" class="compose">
+          <form onsubmit="sendMessage(event)">
+            <input id="userMsg" type="text" placeholder="Enter" />
+            <button type="submit" id="sendMsg">Send</button>
+          </form>
+
+          <button id="share-location">Share Location</button>
+        </div>
+      </div>
     </div>
-
-    <button id="share-location">Share Location</button>
 
     <!-- Mustache template to render on the screen. We can also have template on a seperate file, but including is also fine -->
     <script id="mustache-message-template" type="text/html">
-      <div>
-        <p>{{createdAt}} - {{message}}</p>
+      <div class="message">
+        <p>
+          <span class="message__name">name</span>
+          <span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p>{{message}}</p>
       </div>
     </script>
 
     <script id="mustache-location-template" type="text/html">
       <div>
-        <p><a href="{{location}}" target="_blank">Location</a></p>
+        <p>
+          <span class="message__name">name</span>
+          <span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p class="message"><a href="{{url}}" target="_blank">Location</a></p>
       </div>
     </script>
 
