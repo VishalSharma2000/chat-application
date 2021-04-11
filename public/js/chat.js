@@ -14,7 +14,10 @@ const locationTemplate = document.querySelector("#mustache-location-template").i
 socket.on('message', message => {
   console.log("Message: ", message);
 
-  renderMessage(msgTemplate, { message }, msgs);
+  renderMessage(msgTemplate, {
+    message: message.text,
+    createdAt: moment(message.createdAt).format('hh:mm a'),
+  }, msgs);
 });
 
 socket.on('shareLocation', location => {
