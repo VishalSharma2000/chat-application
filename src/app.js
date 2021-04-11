@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
   socket.emit('message', message);
   socket.broadcast.emit('message', 'A new user has joined');
 
-  socket.on('sendmessage', (message, callback) => {
+  socket.on('message', (message, callback) => {
     const filter = new Filter();
     if (filter.isProfane(message)) {
       return callback('Profanity is not allowed');

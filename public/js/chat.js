@@ -33,10 +33,9 @@ const sendMessage = (event) => {
   event.preventDefault();
 
   sendMsgBtn.disabled = true;
-  console.log('Message: ', msgInput.value);
 
   /* send msg to all connected user */
-  socket.emit("sendmessage", msgInput.value, (error) => {
+  socket.emit("message", msgInput.value, (error) => {
     sendMsgBtn.disabled = false;
     msgInput.value = '';
     msgInput.focus();
