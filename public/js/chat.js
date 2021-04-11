@@ -5,10 +5,29 @@ const socket = io();
 const msgInput = document.querySelector("#userMsg");
 const sendMsgBtn = document.querySelector("#sendMsg");
 const shareLocationBtn = document.querySelector('#share-location');
+const msgs = document.querySelector("#msgs");
+
+// Template
+const msgTemplate = document.querySelector("#mustache-message-template").innerHTML;
+const locationTemplate = document.querySelector("#mustache-location-template").innerHTML;
 
 socket.on('message', message => {
-  console.log("Message from Server: ", message);
+  console.log("Message: ", message);
+
+  renderMessage(msgTemplate, { message }, msgs);
+});
+
+socket.on('shareLocation', location => {
+  console.log('Location: ', location);
+
+  renderMessage(locationTemplate, { location }, msgs);
 })
+
+const renderMessage = (template, value, target) => {
+  const html = Mustache.render(template, value);
+
+  target.insertAdjacentHTML("beforeend", html);
+};
 
 const sendMessage = (event) => {
   event.preventDefault();
@@ -39,7 +58,7 @@ shareLocationBtn.addEventListener('click', () => {
 
   navigator.geolocation.getCurrentPosition((position) => {
     const { latitude, longitude } = position.coords;
-    socket.emit("sendLocation", { latitude, longitude }, () => {
+    socket.emit("shareLocation", { latitude, longitude }, () => {
       shareLocationBtn.disabled = false;
       console.log('Location Shared!');
     });

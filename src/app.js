@@ -33,8 +33,8 @@ io.on('connection', (socket) => {
     callback();
   });
 
-  socket.on('sendLocation', (coords, callback) => {
-    socket.broadcast.emit('message', `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`);
+  socket.on('shareLocation', (coords, callback) => {
+    io.emit('shareLocation', `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`);
 
     callback();
   });

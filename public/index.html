@@ -7,6 +7,10 @@
     <title>Home Page</title>
   </head>
   <body>
+    <h3>Chat Application</h3>
+
+    <div id="msgs"></div>
+
     <div id="chat-form">
       <form onsubmit="sendMessage(event)">
         <input id="userMsg" type="text" placeholder="Enter" />
@@ -15,6 +19,19 @@
     </div>
 
     <button id="share-location">Share Location</button>
+
+    <!-- Mustache template to render on the screen. We can also have template on a seperate file, but including is also fine -->
+    <script id="mustache-message-template" type="text/html">
+      <div>
+        <p>{{message}}</p>
+      </div>
+    </script>
+
+    <script id="mustache-location-template" type="text/html">
+      <div>
+        <a href="{{location}}" target="_blank">Location</a>
+      </div>
+    </script>
 
     <!-- The below script is the client side package or library for the socket.io
   library. It will help the client to make connection with the server. -->
