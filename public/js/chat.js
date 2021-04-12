@@ -38,6 +38,10 @@ const renderMessage = (template, value, target) => {
 const sendMessage = (event) => {
   event.preventDefault();
 
+  // validations
+  if (msgInput.value === '')
+    return;
+
   sendMsgBtn.disabled = true;
 
   /* send msg to all connected user */

@@ -4,55 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.min.css" />
-    <link rel="icon" href="/img/favicon.png" />
+    <link rel="stylesheet" href="./css/styles.min.css" />
+    <link rel="icon" href="./img/favicon.png" />
     <title>Chat App</title>
   </head>
   <body>
-    <div class="chat">
-      <div class="chat__sidebar"></div>
+    <div class="centered-form">
+      <div class="centered-form__box">
+        <h1>Join</h1>
 
-      <div class="chat__main">
-        <div id="msgs" class="chat__messages"></div>
-
-        <div id="chat-form" class="compose">
-          <form onsubmit="sendMessage(event)">
-            <input id="userMsg" type="text" placeholder="Enter" />
-            <button type="submit" id="sendMsg">Send</button>
-          </form>
-
-          <button id="share-location">Share Location</button>
-        </div>
+        <form action="./chat.html">
+          <label for="Name">Name</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Display Name"
+            required
+          />
+          <label for="Name">Room</label>
+          <input type="text" name="room" placeholder="Room ID" required />
+          <button type="submit">Join</button>
+        </form>
       </div>
     </div>
-
-    <!-- Mustache template to render on the screen. We can also have template on a seperate file, but including is also fine -->
-    <script id="mustache-message-template" type="text/html">
-      <div class="message">
-        <p>
-          <span class="message__name">name</span>
-          <span class="message__meta">{{createdAt}}</span>
-        </p>
-        <p>{{message}}</p>
-      </div>
-    </script>
-
-    <script id="mustache-location-template" type="text/html">
-      <div>
-        <p>
-          <span class="message__name">name</span>
-          <span class="message__meta">{{createdAt}}</span>
-        </p>
-        <p class="message"><a href="{{url}}" target="_blank">Location</a></p>
-      </div>
-    </script>
-
-    <!-- The below script is the client side package or library for the socket.io
-  library. It will help the client to make connection with the server. -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/chat.js"></script>
   </body>
 </html>
