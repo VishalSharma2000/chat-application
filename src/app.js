@@ -21,8 +21,13 @@ app.use(express.static('public'));
 let welcomeMsg = "Welcome to chat room!!";
 
 io.on('connection', (socket) => {
-  socket.emit('message', generateMessage(welcomeMsg));
-  socket.broadcast.emit('message', generateMessage('A new user has joined'));
+
+  socket.on('join', ({ username, room }) => {
+    socket.join(room);
+
+    socket.emit('message', generateMessage(welcomeMsg));
+    socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined the room!`));
+  })
 
   socket.on('message', (message, callback) => {
     const filter = new Filter();

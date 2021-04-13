@@ -11,6 +11,9 @@ const msgs = document.querySelector("#msgs");
 const msgTemplate = document.querySelector("#mustache-message-template").innerHTML;
 const locationTemplate = document.querySelector("#mustache-location-template").innerHTML;
 
+// Options
+const { username, room } = Qs.parse(location.search.substr(1));
+
 socket.on('message', message => {
   console.log("Message: ", message);
 
@@ -73,3 +76,5 @@ shareLocationBtn.addEventListener('click', () => {
     });
   });
 });
+
+socket.emit('join', { username, room });
