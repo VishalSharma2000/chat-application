@@ -59,13 +59,16 @@ io.on('connection', (socket) => {
       return callback('Profanity is not allowed');
     }
 
+    const user = getUser(socket.id);
+
     // emit message to all the sockets
-    io.emit('message', generateMessage(message));
+    io.to(user.room).emit('message', generateMessage(message));
     callback();
   });
 
   socket.on('shareLocation', (coords, callback) => {
-    io.emit('shareLocation', generateLocationMessage(coords));
+    const user = getUser(socket.id);
+    io.to(user.room).emit('shareLocation', generateLocationMessage(coords));
 
     callback();
   });
@@ -77,7 +80,7 @@ io.on('connection', (socket) => {
     
     if(user) {
       // If the user is actually being removed then acknowledge
-      socket.broadcast.to(user.room).emit('message', generateMessage('A user has left the room'));
+      socket.broadcast.to(user.room).emit('message', generateMessage(`${user.name} has left the room`));
     }
   });
 });
