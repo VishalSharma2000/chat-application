@@ -6,10 +6,12 @@ const msgInput = document.querySelector("#userMsg");
 const sendMsgBtn = document.querySelector("#sendMsg");
 const shareLocationBtn = document.querySelector('#share-location');
 const msgs = document.querySelector("#msgs");
+const sidebar = document.querySelector(".chat__sidebar");
 
 // Template
 const msgTemplate = document.querySelector("#mustache-message-template").innerHTML;
 const locationTemplate = document.querySelector("#mustache-location-template").innerHTML;
+const sidebarTemplate = document.querySelector('#mustache-sidebar-template').innerHTML;
 
 // Options
 const { username, room } = Qs.parse(location.search.substr(1));
@@ -18,6 +20,7 @@ socket.on('message', message => {
   console.log("Message: ", message);
 
   renderMessage(msgTemplate, {
+    username: message.username,
     message: message.text,
     createdAt: moment(message.createdAt).format('hh:mm a'),
   }, msgs);
@@ -27,9 +30,16 @@ socket.on('shareLocation', location => {
   console.log('Location: ', location);
 
   renderMessage(locationTemplate, {
+    username: location.username,
     url: location.url,
     createdAt: moment(location.createdAt).format('hh:mm a'),
   }, msgs);
+})
+
+socket.on('roomData', ({ room, users }) => {
+  const html = Mustache.render(sidebarTemplate, { room, users });
+
+  sidebar.innerHTML = html;
 })
 
 const renderMessage = (template, value, target) => {

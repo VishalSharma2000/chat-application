@@ -42,10 +42,16 @@ io.on('connection', (socket) => {
     
     // creates a different channel or room
     socket.join(user.room);
-    socket.emit('message', generateMessage(welcomeMsg));
+    socket.emit('message', generateMessage('Admin', welcomeMsg));
     
     // send the message to all the sockets except itself inside the given room.
-    socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined the room!`));
+    socket.broadcast.to(user.room).emit('message', generateMessage('Admin', `${user.username} has joined the room!`));
+
+    // Update Userlist
+    io.to(user.room).emit('roomData', {
+      room: user.room,
+      users: getUsersInRoom(user.room)
+    });
 
     // acknowledge the client without - stating no error
     callback();
@@ -62,13 +68,13 @@ io.on('connection', (socket) => {
     const user = getUser(socket.id);
 
     // emit message to all the sockets
-    io.to(user.room).emit('message', generateMessage(message));
+    io.to(user.room).emit('message', generateMessage(user.username, message));
     callback();
   });
 
   socket.on('shareLocation', (coords, callback) => {
     const user = getUser(socket.id);
-    io.to(user.room).emit('shareLocation', generateLocationMessage(coords));
+    io.to(user.room).emit('shareLocation', generateLocationMessage(user.username, coords));
 
     callback();
   });
@@ -80,7 +86,13 @@ io.on('connection', (socket) => {
     
     if(user) {
       // If the user is actually being removed then acknowledge
-      socket.broadcast.to(user.room).emit('message', generateMessage(`${user.name} has left the room`));
+      socket.broadcast.to(user.room).emit('message', generateMessage('Admin', `${user.username} has left the room`));
+    
+      // Update Userlist
+      io.to(user.room).emit('roomData', {
+        room: user.room,
+        users: getUsersInRoom(user.room)
+      });
     }
   });
 });
