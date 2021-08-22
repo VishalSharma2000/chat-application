@@ -1,3 +1,3 @@
 # Chat Application
 
-## Friends can talk with each other
+## A JavaScript based Application to always be connected with our peers and team members socially.
